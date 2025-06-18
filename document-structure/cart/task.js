@@ -13,20 +13,24 @@ document.querySelectorAll('.product__quantity-control_inc').forEach((e) => {
 const products = [];
 document.querySelectorAll('.product').forEach((e) => {
     products.push(e)
-})
-console.log(products);
+});
 document.querySelectorAll('.product__add').forEach((e) => {
     e.addEventListener('click', (e) => {
         const product = e.target.closest('.product');
-        const product_cart = `<div class="cart__product" data-id="${product.getAttribute('data-id')}">
+        const productInCart = `<div class="cart__product" data-id="${product.getAttribute('data-id')}">
         <img class="cart__product-image" src="${e.target.closest('.product').firstElementChild.nextElementSibling.src}">
         <div class="cart__product-count">${e.target.previousElementSibling.firstElementChild.nextElementSibling.textContent}</div>
         </div>`
-        if (true) {
-            if( document.querySelector('.cart__product')) {
-                document.querySelector('.cart__product').insertAdjacentHTML('afterend', product_cart)
+        const card = [...document.querySelectorAll('.cart__product')];
+        const dobleProduct = card.find((element) => element.getAttribute('data-id') ==  product.getAttribute('data-id'));
+        if (dobleProduct) {
+            let count = Number(dobleProduct.lastElementChild.textContent.trim()) + Number(e.target.previousElementSibling.firstElementChild.nextElementSibling.textContent.trim())
+            dobleProduct.lastElementChild.textContent = count;
+        } else {
+            if ( document.querySelector('.cart__product')) {
+                document.querySelector('.cart__product').insertAdjacentHTML('afterend', productInCart)
             } else {
-                document.querySelector('.cart__products').innerHTML = product_cart
+                document.querySelector('.cart__products').innerHTML = productInCart
             }
         }
     })
