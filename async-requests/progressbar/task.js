@@ -15,9 +15,9 @@ form.addEventListener('submit', (e) => {
     }
     xhr.onloadend = () => {
         if (xhr.status == 200) {
-            console.log('YEEEEES')
+            console.log('uploaded successfully')
         } else if (xhr.status == 404){
-            
+            console.error(xhr.status);
         }
     }
 })
