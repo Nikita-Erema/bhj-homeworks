@@ -3,14 +3,16 @@ const formSign = document.querySelector('#signin');
 const button = document.querySelector('#signin__btn');
 const signinTrue = document.querySelector('#welcome');
 const userId = document.querySelector('#user_id');
-if (!localStorage.id) {
-    loginForm.addEventListener('submit', auth);
-    button.addEventListener('click', auth);
-} else {
+function welcome() {
     formSign.classList.toggle('signin_active');
     signinTrue.classList.add('welcome_active');
     userId.textContent = localStorage.id;
 }
+console.log(localStorage.id)
+if (localStorage.id) {
+    welcome();
+}
+loginForm.addEventListener('submit', auth);
 function auth(e) {
     e.preventDefault();
     const form = new FormData(loginForm)
@@ -22,10 +24,8 @@ function auth(e) {
         console.log(xhr.response)
         const serverAnswer = xhr.response
         if(serverAnswer.success) {
-            signinTrue.classList.add('welcome_active');
             localStorage.id = serverAnswer.user_id;
-            userId.textContent = localStorage.id;
-            formSign.classList.toggle('signin_active');
+            welcome();
         } else {
             loginForm.reset();
             console.error("неверный логин или пароль");
